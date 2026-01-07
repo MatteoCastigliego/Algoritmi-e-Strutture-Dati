@@ -1,0 +1,16 @@
+15
+GTT002 Einaudi Piazza_Statuto 2018/12/12 22:12:08 23:03:08 2
+GTT004 Cso_Trapani XVIII_Dicembre 2018/11/03 17:28:15 17:54:15 5
+GTT001 Politecnico Braccini 2018/12/13 09:09:17 09:52:17 2
+GTT006 Marmolada Braccini 2018/11/02 08:15:29 08:40:29 3
+GTT006 XVIII_Dicembre Piazza_Statuto 2018/11/01 13:05:23 13:44:23 5
+GTT002 Cso_Trapani Sebastopoli 2018/12/07 10:06:48 10:44:48 2
+GTT004 Porta_Nuova Einaudi 2018/09/27 03:58:33 04:48:33 1
+GTT003 Einaudi Porta_Nuova 2018/12/13 10:47:15 11:29:15 5
+GTT006 Piazza_Statuto Cso_Trapani 2018/12/18 15:42:17 16:24:17 5
+GTT003 Cso_Trapani Politecnico 2018/11/27 16:44:39 17:34:39 3
+GTT002 Porta_Nuova Piazza_Statuto 2018/11/26 04:11:26 04:47:26 2
+GTT003 Einaudi Cso_Trapani 2018/11/15 18:43:22 19:29:22 0
+GTT004 Cso_Trapani Porta_Nuova 2018/09/26 13:26:31 14:01:31 3
+GTT005 Braccini Marmolada 2018/11/27 19:57:55 20:57:55 3
+GTT001 Braccini Marmolada 2018/12/20 06:54:52 07:21:52 5

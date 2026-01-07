@@ -1,1 +1,1 @@
-# Algoritmi-e-Strutture-Dati
+Svolgimento dei laboratori del corso di algoritmi e strutture dati

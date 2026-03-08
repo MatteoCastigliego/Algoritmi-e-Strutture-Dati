@@ -1,0 +1,138 @@
+Esercizio 1
+
+link removeDupl(link h)
+{
+    if (h == NULL)
+        return NULL;
+    link x, p, k;
+    for (x = h; x != NULL; x = x->next)
+    {
+        for (p = x->next, k = x; p != NULL;)
+        {
+            if (strcmp(x->val, p->val) == 0)
+            {
+                link tmp = p;
+                k->next = p->next;
+                p = p->next;
+                free(tmp->val);
+                free(tmp);
+            }
+            else
+            {
+                k = p;
+                p = p->next;
+            }
+            <1>
+        }
+    }
+    return h;
+}
+
+La funzione scorre la lista a partire dal primo elemento e itera sui successivi per verificare l'esistenza di un duplicato.
+Il passaggio del parametro puntatore p=p->next; poteva eventualmente essere omesso nell' if...else e messo al punto <1>, 
+ciò non compromette la funzionalità dell'algoritmo.
+
+
+
+
+Esercizio 2
+
+typedef struct nodo *link;
+struct nodo{
+    Key val;
+    link left;
+    link right;
+};
+
+typedef struct bst *BST;
+struct bst{
+    link root;
+};
+
+int BSTcountBetween(BST b, Key k1, Key k2)
+{
+    if (!presente(b->root, k1) || !presente(b->root, k2))
+        return -1;
+    link antenato_comune = trova_antenato_comune(b->root, k1, k2);
+    int d1 = calcola_nodi(antenato_comune, k1);
+    int d2 = calcola_nodi(antenato_comune, k2);
+    return (d1 + d2 - 1); // sottraggo 1 perchè la il nodo comune viene contato 2 volte, prima in d1 e poi d2
+}
+int presente(link root, Key k)
+{
+    if (root == NULL)
+        return 0;
+    if (KEYcmp(KEYget(&root->val), k) > 0)
+        return presente(root->left, k);
+    else if (KEYcmp(KEYget(&root->val), k) < 0)
+        return presente(root->right, k);
+    else
+        return 1;
+}
+link trova_antenato_comune(link h, Key k1, Key k2)
+{
+    if (h == NULL)
+        return NULL;
+    if (((KEYcmp(KEYget(&h->val), k1) < 0) && KEYcmp(KEYget(&h->val), k2) < 0)) return
+trova_antenato_comune(h->right, k1, k2);
+    else if (((KEYcmp(KEYget(&h->val), k1) > 0) && KEYcmp(KEYget(&h->val), k2) > 0)) return
+trova_antenato_comune(h->left, k1, k2);
+    else
+        return h;
+}
+int calcola_nodi(link h, Key k)
+{
+    /* ometto i controlli perchè h non sarà mai NULL essendo un nodo del BST; k sicuro esiste altrimenti il
+    programma non arriverebbe proprio a questo punto*/
+    if (KEYcmp(KEYget(&h->val), k) == 0)
+        return 0;
+    else if (KEYcmp(KEYget(&h->val), k) > 0)
+        return calcola_nodi(h->left, k) + 1;
+    else
+        return calcola_nodi(h->right, k) + 1;
+}
+
+Ho interpretato la traccia secondo il criterio di calcolare il numero di nodi presenti lungo un "percorso" che collega k1 e k2.
+Dopo aver verificato la presenza di entrambi i nodi, cerco il nodo "antenato" comune dal quale parte il conteggio dei nodi verso k1 e k2.
+Al risultato finale sottraggo 1 perchè la radice viene contata sia quando calcola i nodi che la separano da k1 sia quando calcola i nodi 
+che la separano da k2.
+
+
+
+
+Esercizio 3
+
+int strContains(char *s1, char *s2)
+{
+    int l1 = strlen(s1), l2 = strlen(s2);
+    int caratteri_da_rimuovere = l1 - l2;
+    int cnt = 0, dim_soluzione = l1 - caratteri_da_rimuovere;
+    char *sol = (char *)malloc((dim_soluzione+1) * sizeof(char));
+    sol[dim_soluzione] = '\0';
+    int *mark = calloc(l1,sizeof(int));
+    return verifica_uguaglianza(0, dim_soluzione, s1, s2, cnt, sol, mark);
+}
+
+int verifica_uguaglianza(int pos, int dim, char *s1, char *s2, int cnt, char *sol, int *mark)
+{
+    if (pos >= dim)
+        return (strcmp(s2, sol) == 0);
+    
+    for (int i = 0; i < strlen(s1); i++)
+    {
+        if (mark[i] == 0)
+        {
+            mark[i] = 1; 
+            sol[pos] = s1[i];
+            if(verifica_uguaglianza(pos + 1, dim, s1, s2, cnt + 1, sol, mark)) return 1;
+            mark[i] = 0;
+        } 
+    }
+    return 0;
+}
+
+Ho definito bene il nome della funzione perchè c'era un errore di battitura nell'originale e ho aggiunto la dichiarazione del vettore mark nella funzione verifica_uguaglianza.
+mark l'ho allocato con calloc così inizializza tutto a zero.
+Ho cambiato la condizione di ritorno appena si arriva alla dimensione della soluzione perchè prima ritornava 0 appena trovava una possibile soluzione.
+Ho aggiunto un if il quale è necessario per far fermare il ciclo nel caso in cui trovi una stringa uguale a s2.
+Il modello che ho utilizzato è dovuto al fatto che pensavo di poter rimescolare i caratteri rimasti dopo l'eliminazione.
